@@ -132,7 +132,8 @@ input[type = range]:after {
   text-shadow: 1px 0px 1px #161616;
 }
 
-input[type = submit] {
+input[type = submit],
+.button {
   -moz-appearance:    none;
   -webkit-appearance: none;
   appearance:         none;
@@ -144,7 +145,11 @@ input[type = submit] {
   text-transform: uppercase;
 }
 
-input[type = submit]:hover, .tool input[type = submit]:hover, .mode:hover, .fullScreen:hover  {
+.tool input[type = submit]:hover, 
+input[type = submit]:hover, 
+.mode:hover, 
+.fullScreen:hover, 
+a.button:hover  {
   background-color: #3f3f3f;
   color: #969696;
   cursor: hand;
@@ -432,10 +437,17 @@ canvas.background {
   text-align: left;
 }
 
-.button {
-  background: #222;
-  display: inline-block;
-  padding: 10px;
+.button,
+a.button {
+  font-size: 19px;
+  background: #2c2c2c;
+  border: none;
+  color: #666;
+  font-family: Monospace;
+  margin: 0 auto;
+  padding: 5px 7px;
+  text-transform: uppercase;
+  vertical-align: middle;
 }
 
 .buttonBox { margin: 5px 8px 7px; }

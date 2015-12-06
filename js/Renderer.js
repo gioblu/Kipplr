@@ -154,11 +154,11 @@
       state.stroke.g = _.random(200, 255);
       state.stroke.b = _.random(200, 255);
       state.stroke.opacity = _.random(0.25, 0.5);
-      state.scale = _.random(1, 50);
-      state.stroke = _.random(1, 5);
-      state.density = 80;
+      state.scale = _.random(1, 75);
+      state.stroke = _.random(1, 25);
+      state.density = 1;
       state.drawMode = interface.modes[_.random(0, interface.modes.length  - 2)];
-      state.origin.active = (_.random(0, 20) == 5) ? true : false;
+      state.origin.active = (_.random(0, 10) == 5) ? true : false;
       state.fractal.offsetX = 130;
       state.fractal.power = 1;
       state.composite = (_.random(0, 5) == 5) ? 'lighter' : 'source-over';

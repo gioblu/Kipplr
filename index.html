@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta charset="utf8">
+    <meta name="author" content="Giovanni Blu Mitolo">
+    <meta name="description" content="Online abstract drawing tool">
+    <meta name="keywords" content="Kipplr, Kipple, abstract, art, artwork, procedural, canvas, draw, drawing">
+    <link href="css/interface.css" rel="Stylesheet" />
+    <link href="css/index.css" rel="Stylesheet" />
+    <meta property="og:site_name" content="Kipplr" />
+    <meta property="og:title" content="Kipplr = Online abstract drawing tool" />
+    <meta property="og:image" content="" />
+    <meta property="og:description" content="Draw abstract pictures with your browser in seconds" />
+    <meta property="og:url" content="http://www.kipplr.xyz" />
+    <meta property="og:type" content="kipplr:editor" />
+    <meta name="medium" content="image" />
+  </head>
+  <body class="page">
+  <div id="page-shadow" class="hidden"></div>
+    <div id="dialog-box" class="hidden">
+      <div class="constrain">
+        <h1>Kipplr, a new abstract drawing tool.</h1>
+        <p>
+          Ciao! I am Giovanni Blu Mitolo from Milan, I made this single page application some years ago as a 
+          proof of concept and to test myself mastering javascript.
+          <br>
+          <br>
+          Kipplr's name is inspired by Philip K. Dick's novel "Do Androids Dream of Electric Sheep?" and by the concept of "Kipple". If you need, feel free to contact me at <a href="mailto:gioscarab@gmail.com">gioscarab@gmail.com</a>
+          <br>
+        </p>
+        <img src="img/github.png"><a href="https://github.com/gioblu/Kipplr" class="github" target="_blank">Fork Kipplr on github</a>
+      </div>
+    </div>
+    <div class="centered">
+      <div class="logo">
+        <div class="inner">
+          <canvas id="logo-canvas" width="400" height="100" unselectable="on" onselectstart="return false" onmousedown="return false" class="background"></canvas>
+          <img src="img/logo_222.png" class="mask">
+        </div>
+      </div>
+      <section class="hero">
+        <div class="constrain">
+          <h1 class="call-to-action">Kipplr is a tool made to help you to create and save unique images in seconds. Try yourself drawing as you never did before. </h1>
+          <div class="buttonBox">
+            <a href="http://editor.kipplr.xyz" class="button info-dialog">Start Kipplr</a>
+            <a href="" class="button">info</a>
+          </div>
+        </div>
+      </section>
+    </div>
+    <small class="info">Written by <a href="http://www.github.com/gioblu" target="_blank">GioBlu</a> 2013-2014</small>
+    <script type="text/javascript" src="js/zepto.min.js"></script>
+    <script type="text/javascript" src="js/underscore.min.js"></script>
+    <script type="text/javascript" src="js/Texts.js"></script>
+    <script type="text/javascript" src="js/Geometry.js"></script>
+    <script type="text/javascript" src="js/User.js"></script>
+    <script type="text/javascript" src="js/Interface.js"></script>
+    <script type="text/javascript" src="js/PostProcessor.js"></script>
+    <script type="text/javascript" src="js/Renderer.js"></script>
+    <script>
+      // GLOBAL VARIABLES ----------------------------------------------------------------
+      var UIindex = 0;
+      var canvas = document.getElementById('logo-canvas');
+      var context = this.canvas.getContext('2d');
+      var user = new User();
+      var options = {
+        interface: {
+          DOMinterface: false,
+          state: {
+            density: _.random(80, 100),
+            drawing: true,
+            drawMode: 'quad',
+            scale: 10,
+          }
+        },
+        renderer: {
+          padding: canvas.width / 5,
+          filters: false,
+          random: true
+        }
+      };
+
+      var interface = new Interface(canvas, options['interface']);
+      var renderer = new Renderer(canvas, interface, options['renderer']);
+      interface.animate();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+
+.call-to-action {
+	max-width: 460px;
+	padding: 0 1.5em;
+	margin-top: 20px;
+	font-size: 18px;
+}
+
+.centered {
+	height: 300px;
+  position: absolute;
+  top: 50%;
+  margin-top: -150px;
+  left: 0;
+  right: 0;
+}
+
+.logo {
+	margin: 0 auto;
+}
+
+#logo-canvas {
+	width: 80%;
+}
+
+.buttonBox {
+	max-width: 380px;
+	margin: 2em auto;
+}
+
+@media all and (min-width: 400px) and (max-width: 9999px) {
+  #logo-canvas {
+    width: 100%;
+  }
+}
