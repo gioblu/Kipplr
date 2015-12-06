@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html class="editor">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta charset="utf8">
+    <meta name="author" content="Giovanni Blu Mitolo">
+    <meta name="description" content="Online abstract drawing tool">
+    <meta name="keywords" content="Kipplr, Kipple, abstract, art, artwork, procedural, canvas, draw, drawing">
+    <link href="css/interface.css" rel="Stylesheet" />
+    <link href="css/icons.css" rel="Stylesheet" />
+    <title>Kipplr - Online abstract drawing tool.</title>
+  </head>
+  <body class="editor">
+    <canvas id="fingerPrintCanvas" width="5" height="5" style="width: 5px !important; height: 5px !important"></canvas>
+    <div id="page-shadow" class="hidden"></div>
+    <div id="dialog-box" class="hidden">
+      <div class="constrain">
+        <h1>Kipplr, a new abstract drawing tool.</h1>
+        <p>
+          Ciao! I am Giovanni Blu Mitolo from Milan, I made this single page application some years ago as a 
+          proof of concept and to test myself mastering javascript.
+          <br>
+          <br>
+          Kipplr's name is inspired by Philip K. Dick's novel "Do Androids Dream of Electric Sheep?" and by the concept of "Kipple". If you need, feel free to contact me at <a href="mailto:gioscarab@gmail.com">gioscarab@gmail.com</a>
+          <br>
+        </p>
+        <img src="img/github.png"><a href="" class="github">Fork me on github</a>
+      </div>
+    </div>
+    <div id="head">
+      <p>Kipplr</p>
+    </div>
+    <div id="container-index">
+      <div class="expander">
+        <canvas id="myCanvas" width="640" height="640" unselectable="on" onselectstart="return false"></canvas>
+        <div id="tools">
+          <div class="buttonBox">
+            <input type="submit" class="interface action" data-action="play" value="Play" title="Play (space on keyboard)"><!--
+            --><input type="submit" class="interface action" data-action="pause" value="Pause" title="Pause (space on keyboard)"><!--
+            --><input type="submit" class="interface action" data-action="erase" value="Erase" title="Reset canvas"><!--
+            --><input type="submit" class="interface action" data-action="save" value="Save"><!--
+            --><input type="submit" class="interface action info-dialog" data-action="info" value="Info">
+          </div>
+          <!-- interface MODES ................................................................... -->
+          <div id="modes">
+            <small id="tri"  class="mode icon-triangle"></small><!--
+            --><small id="rect" class="mode icon-roundedrectangle"></small><!--
+            --><small id="poly" class="mode icon-polygon"></small><!--
+            --><small id="circ" class="mode icon-elipse"></small><!--
+            --><small id="line" class="mode icon-line"></small><!--
+            --><small id="quad" class="mode icon-curve"></small><!--
+            --><small id="text" class="mode icon-text"></small><!--
+            --><small id="fractal" class="mode icon-spiral"></small><!--
+            --><small id="filters" class="mode icon-chemistry"></small>
+          </div>
+          <!-- FRACTAL ......................................................................... -->
+          <div id="fractal-panel" class="panel">
+            <div class="title-row">
+              <hr class="icon-spiral"/>
+              <small class="title" data-tool="fractal-active">Fractal</small>
+            </div>
+            <div class="tool fractal">
+              <small>Type</small>
+              <select class="interface" data-interface="fractal-type">
+                <option value="drawFlame">Flame</option>
+                <option value="drawPitagoraTree">Pitagora's tree</option>
+                <option value="drawRandomTree">Random tree</option>
+                <option value="drawSpyral">Spyral</option>
+              </select>
+              <hr>
+            </div>
+            <div class="tool fractal">
+              <small>Power</small>
+              <input class="interface" data-interface="fractal-power" type="range" min="1" max="10" step="1">
+            </div>
+            <div class="tool fractal">
+              <small>Depth</small>
+              <input class="interface" data-interface="fractal-depth" type="range" min="1" max="20" step="1">
+            </div>
+            <div class="tool fractal">
+              <small>OffsetX</small>
+              <input class="interface" data-interface="fractal-offsetX" type="range" min="0" max="180" step="1">
+            </div>
+          </div>
+          <!-- FILTERS ......................................................................... -->
+          <div id="filters-panel" class="panel">
+            <div class="title-row">
+              <hr class="icon-chemistry"/>
+              <small class="title" data-tool="filters-active">Filters</small>
+            </div>
+            <div class="tool filters">
+              <small>Type</small>
+              <select class="interface" data-interface="filters-type">
+                <option value="noise">Noise</option>
+                <option value="grayScale">Gray scale</option>
+              </select>
+              <input type="submit" class="interface action" data-action="filter" value="Apply">
+              <hr>
+              <p>When you use filters render is paused and you can only post-produce the picture you have made</p>
+            </div>
+          </div>
+          <!-- TEXT PANEL - text panel selection use IDs to remove checks and data as usual.. -->
+          <div id="text-panel" class="panel">
+            <div class="title-row">
+              <hr class="icon-text"/>
+              <small class="title" data-tool="text-active">Text</small>
+            </div>
+            <div class="tool text">
+              <input class="interface" id="randomLetters" data-interface="text-randomLetters" type="checkbox">
+              <small>Random letters</small>
+              <input class="interface" id="randomWords" data-interface="text-randomWords" type="checkbox">
+              <small>Random words</small>
+              <hr>
+            </div>
+            <div class="tool text">
+              <input class="interface" id="randomWordsType" data-interface="text-randomWordsType" type="checkbox">
+              <small>Word group</small>
+              <select class="interface" id="selectedWordTypes" data-interface="text-selectedWordTypes">
+                <option value="nerd">Nerd</option>
+                <option value="art">Art</option>
+              </select>
+            </div>
+            <div class="tool text last">
+              <input class="interface" id="customWords" data-interface="text-customWords" type="checkbox">
+              <small>Custom words</small>
+              <input type="submit" class="interface action" data-action="addCustomWord" value="add"><!--
+              --><input id="customWord" type="text" value="">
+            </div>
+            <div class="tool text box customWords"></div>
+          </div>
+          <!-- ARC - For Circle only ............................................................. -->
+          <div id="circ-panel" class="panel">
+            <div class="title-row">
+              <hr class="icon-radius"/>
+              <small class="title" data-tool="circ-active">Arc</small>
+            </div>
+            <div class="tool circ">
+              <small>Degrees</small>
+                <input class="interface" data-interface="circ-degrees" type="range" min="0" max="360" step="1">
+            </div>
+          </div>
+          <!-- SIDES - For polygon only .......................................................... -->
+          <div id="poly-panel" class="panel">
+            <div class="title-row">
+              <hr class="icon-polygon"/>
+              <small class="title" data-tool="poly-active">Polygon</small>
+            </div>
+            <div class="tool poly">
+              <small>Sides</small>
+              <input class="interface" data-interface="poly-sides" type="range" min="3" max="12" step="1">
+            </div>
+          </div>
+          <!-- GENERAL - POSITION / SCALE PANEL ..............................................  -->
+          <div id="general-panel" class="panel">
+            <div class="title-row">
+              <hr class="icon-insertpicture"/>
+              <small class="title" data-tool="general">General</small>
+            </div>
+            <div class="tool general dimensions">
+              <small>Width in px</small>
+              <input id="dimensions" type="text" value="640">
+              <input type="submit" class="interface action" data-action="updateDimensions" value="update">
+            </div>
+            <div class="tool general composite">
+              <small>Blend modes</small>
+              <select class="interface" data-interface="composite">
+                <option value="source-over"> Source over</option>
+                <!--<option value="source-in">Source in</option>
+                <option value="source-out">Source out</option>
+                <option value="source-out">Source atop</option>
+                <option value="destination-over">Destination over</option>
+                <option value="destination-in">Destination in</option>
+                <option value="destination-out">Destination out</option>
+                <option value="destination-atop">Destination out</option>-->
+                <option value="lighter">Lighter</option>
+                <option value="darker">Darker</option>
+                <!--<option value="copy">Copy</option>-->
+                <option value="xor">Xor</option>
+              </select>
+              <hr />
+            </div>
+            <div class="tool general scale">
+              <small>Scale</small>
+              <input class="interface" data-interface="scale" type="range" min="1" max="640" step="1">
+            </div>
+            <div class="tool general rotation">
+              <small>Angle</small>
+              <input class="interface" data-interface="rotation" type="range" min="0" max="360" step="1">
+            </div>
+            <div class="tool general density">
+              <small>Density</small>
+              <input class="interface" data-interface="density" type="range" min="1" max="1000" step="0.1">
+            </div>
+          </div>
+          <!-- FIXED PANEL .................................................................... -->
+          <div id="origin-panel" class="panel">
+            <div class="title-row">
+              <hr class="icon-grid"/>
+              <small class="title" data-tool="origin-active">Fixed origin</small>
+            </div>
+            <div class="tool grid origin">
+              <small>OriginX</small>
+              <input class="interface" data-interface="origin-x" type="range" min="0" max="640" step="1">
+            </div>
+            <div class="tool grid origin">
+              <small>OriginY</small>
+              <input class="interface" data-interface="origin-y" type="range" min="0" max="640" step="1">
+            </div>
+          </div>
+          <!-- FILL PANEL ..................................................................... -->
+          <div id="fill-panel" class="panel">
+            <div class="title-row">
+              <hr  class="icon-3d"/>
+              <small class="title" data-tool="fill-active">Fill</small>
+            </div>
+            <div class="tool r fill">
+              <small>Red</small>
+              <input class="interface" data-interface="fill-r" type="range" min="0" max="255" step="0.5">
+            </div>
+            <div class="tool g fill">
+              <small>Green</small>
+              <input class="interface" data-interface="fill-g" type="range" min="0" max="255" step="0.5">
+            </div>
+            <div class="tool b fill">
+              <small>Blue</small>
+              <input class="interface" data-interface="fill-b" type="range" min="0" max="255" step="0.5">
+            </div>
+            <!--
+            <div class="tool fill color">
+              <small>Color</small>
+              <input type="color" class="interface" data-interface="fill-color" name="color" value="#ff0000">
+            </div>
+            -->
+            <div class="tool fill">
+              <small>Opacity</small>
+              <input class="interface" data-interface="fill-opacity" type="range" min="0" max="1" step="0.01">
+            </div>
+          </div>
+          <!-- STROKE PANEL .....................................................................  -->
+          <div id="stroke-panel" class="panel">
+            <div class="title-row">
+              <hr class="icon-polygon"/>
+              <small class="title" data-tool="stroke-active">Stroke</small>
+            </div>
+            <div class="tool stroke width">
+              <small>Width</small>
+              <input class="interface" data-interface="stroke-width" type="range" min="1" max="320" step="1">
+            </div>
+            <div class="tool r stroke">
+              <small>Red</small>
+              <input class="interface" data-interface="stroke-r" type="range" min="0" max="255" step="0.5">
+            </div>
+            <div class="tool g stroke">
+              <small>Green</small>
+              <input class="interface" data-interface="stroke-g" type="range" min="0" max="255" step="0.5">
+            </div>
+            <div class="tool b stroke">
+              <small>Blue</small>
+              <input class="interface" data-interface="stroke-b" type="range" min="0" max="255" step="0.5">
+            </div>
+            <!-- COLOR PICKER INPUT
+            <div class="tool stroke color">
+              <small>Color</small>
+              <input type="color" class="interface" data-interface="stroke-color" name="color" value="#ff0000">
+            </div>
+            -->
+            <div class="tool stroke">
+              <small>Opacity</small>
+              <input class="interface" data-interface="stroke-opacity" type="range" min="0" max="1" step="0.01">
+            </div>
+          </div>
+          <!-- SHADOW PANEL .....................................................................  -->
+          <div id="shadow-panel" class="panel">
+            <div class="title-row">
+              <hr class="icon-ghost"/>
+              <small class="title" data-tool="shadow-active">Shadow</small>
+            </div>
+            <div class="tool shadow">
+              <small>OffsetX</small>
+              <input class="interface" data-interface="shadow-x" type="range" min="-1" max="1" step="0.01">
+            </div>
+            <div class="tool shadow">
+              <small>OffsetY</small>
+              <input class="interface" data-interface="shadow-y" type="range" min="-1" max="1" step="0.01">
+            </div>
+            <div class="tool r shadow">
+              <small>Red</small>
+              <input class="interface" data-interface="shadow-r" type="range" min="0" max="255" step="0.5">
+            </div>
+            <div class="tool g shadow">
+              <small>Green</small>
+              <input class="interface" data-interface="shadow-g" type="range" min="0" max="255" step="0.5">
+            </div>
+            <div class="tool b shadow">
+              <small>Blue</small>
+              <input class="interface" data-interface="shadow-b" type="range" min="0" max="255" step="0.5">
+            </div>
+            <!-- COLOR PICKER INPUT
+            <div class="tool stroke color">
+              <small>Color</small>
+              <input type="color" class="interface" data-interface="shadow-color" name="color" value="#ff0000">
+            </div>
+            -->
+            <div class="tool shadow">
+              <small>Opacity</small>
+              <input class="interface" data-interface="shadow-opacity" type="range" min="0" max="1" step="0.01">
+            </div>
+            <div class="tool shadow">
+              <small>Blur</small>
+              <input class="interface" data-interface="shadow-blur" type="range" min="1" max="100" step="1">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <small class="info">Written by <a href="http://www.github.com/gioblu" target="_blank">GioBlu</a> 2013-2014</small>
+    <script type="text/javascript" src="js/zepto.min.js"></script>
+    <script type="text/javascript" src="js/underscore.min.js"></script>
+    <script type="text/javascript" src="js/Texts.js"></script>
+    <script type="text/javascript" src="js/Geometry.js"></script>
+    <script type="text/javascript" src="js/User.js"></script>
+    <script type="text/javascript" src="js/Mouse.js"></script>
+    <script type="text/javascript" src="js/Keyboard.js"></script>
+    <script type="text/javascript" src="js/Interface.js"></script>
+    <script type="text/javascript" src="js/PostProcessor.js"></script>
+    <script type="text/javascript" src="js/Renderer.js"></script>
+    <script>
+      // GLOBAL VARIABLES ----------------------------------------------------------------
+      var canvas = document.getElementById('myCanvas');
+      var context = this.canvas.getContext('2d');
+
+      var options = {
+        interface: {
+          DOMinterface: true,
+          mouse: true,
+          keyboard: true,
+          state: { drawing: true }
+        },
+        renderer: {
+          filters: true
+        }
+      };
+
+      var user = new User();
+      user.os = $.os;
+      user.browser = $.browser;
+      
+      var interface = new Interface(canvas, options['interface']);
+      var renderer = new Renderer(canvas, interface, options['renderer']);
+      interface.animate();
+    </script>
+  </body>
+</html>
