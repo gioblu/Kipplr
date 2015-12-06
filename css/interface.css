@@ -185,23 +185,23 @@ canvas.background {
 
 #head {
   display: none;
-  position: relative;
-  max-width: 1084px;
   margin: 0.4% auto 0;
+  max-width: 1084px;
+  position: relative;
 }
 
 #head p {
-  padding-top: 10px;
-  font-size: 25px;
   color: #6f6f6f;
-  text-shadow: 0px 1px 0px #000;
+  font-size: 25px;
   margin-left: .4em;
+  padding-top: 10px;
+  text-shadow: 0px 1px 0px #000;
 }
 
 #head small {
   color: #6f6f6f;
-  text-align: right;
   padding-bottom: 4px;
+  text-align: right;
 }
 
 /* --- Logo --- */
@@ -244,18 +244,18 @@ canvas.background {
 /* --- Tools --- */
 
 #modes {
+  cursor: pointer;
   margin: 0 auto 20px 8px;
   text-align: left;
-  cursor: pointer;
 }
 
 .mode {
-  font-size: 16px;
   background: #2c2c2c;
   color: #666;
-  padding: 5px;
   display: inline-block;
+  font-size: 16px;
   margin: 5px 5px 2px 0;
+  padding: 5px;
 }
 
 .mode.text { padding: 0 5px; }
@@ -297,8 +297,8 @@ canvas.background {
 }
 
 .title-row .title:hover, .mode:hover {
-  color: #969696;
   background-color: #353535;
+  color: #969696;
   cursor: hand;
   cursor: pointer;
 }
@@ -323,11 +323,11 @@ canvas.background {
 }
 
 .tool {
+  background: #252525;
   color: #6f6f6f;
   display: table;
-  width: 100%;
-  background: #252525;
   padding: 0 10px 1px;
+  width: 100%;
 }
 
 .tool:nth-child(2) {
@@ -415,9 +415,9 @@ canvas.background {
 }
 
 .tool.box.customWords {
+  display: none; 
   margin: 0 auto;
   padding-top: .25em;
-  display: none; 
 }
 
 .tool.last {
@@ -462,17 +462,16 @@ canvas.background {
 }
 
 .info {
+  bottom: 1em;
   color: #5E5E5E;
-  display: block;
+  display: none;
   font-size: 11px;
+  left: 0;
   margin: 10px auto 0;
+  position: absolute;
+  right: 0;
   text-align: center;
   vertical-align: bottom;
-  position: absolute;
-  bottom: 1em;
-  left: 0;
-  right: 0;
-  display: none;
 }
 
 /* --- Dialog box --- */
@@ -480,12 +479,12 @@ canvas.background {
 #dialog-box {
   background: #141414;
   color: #6f6f6f;
+  margin-top: 7%;
+  padding: .5em 1em 1em;
   position: fixed;
   text-align: left;
   width: 100%;
   z-index: 9999;
-  padding: .5em 1em 1em;
-  margin-top: 7%;
 }
 
 #page-shadow {
@@ -504,57 +503,57 @@ canvas.background {
 
 #dialog-box h1 {
   font-size: 14px;
-  padding: 0px 20px 8px;
   margin-bottom: 0;
+  padding: 0px 20px 8px;
 }
 
 #dialog-box p {
+  display: block;
+  font-size: 11px;
+  margin-bottom: 1.5em;
+  margin-left: 1em;
   padding: 0 0 0 8px;
   vertical-align: middle;
-  display: block;
-  margin-left: 1em;
-  margin-bottom: 1.5em;
   word-spacing: -1px;
-  font-size: 11px;
 }
 
 #dialog-box img {
+  margin-left: .7em;
   max-width: 49px;
   opacity: 0.15;
-  margin-left: .7em;
   vertical-align: middle;
 }
 
 #dialog-box .github {
-  font-size: 1.3em;
-  word-spacing: -2px;
   display: inline-block;
-  vertical-align: middle;
+  font-size: 1.3em;
   margin-left: 0;
+  vertical-align: middle;
+  word-spacing: -2px;
 }
 
 #fingerPrintCanvas {
-  position: absolute;
   left: -9999px;
+  position: absolute;
   top: -9999px;
 }
 
 @media all and (min-width: 400px) and (max-width: 9999px) {
   body {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
     bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
   }
 
   #container-index {
-    position: fixed;
-    top: 0;
     bottom: 0;
     left: 0;
-    right: 0;
     padding: 1em;
+    position: fixed;
+    right: 0;
+    top: 0;
   }
 
   .expander {
@@ -565,14 +564,14 @@ canvas.background {
 
   #tools {
     bottom: 0;
-    overflow-y: scroll;
+    height: auto;
     margin: auto;
     max-width: 50%;
+    overflow-y: scroll;
     position: absolute;
     right: 0;
     top: 0;
     vertical-align: middle;
-    height: auto;
   }
 
   #myCanvas {
@@ -584,8 +583,8 @@ canvas.background {
     position: absolute;
     top: 0;
     vertical-align: middle;
-    z-index: 9999;
     width: auto;
+    z-index: 9999;
   }
 
   .buttonBox {
@@ -615,8 +614,8 @@ canvas.background {
 @media all and (min-width: 953px) and (max-width: 9999px) {
 
   #head {
-    margin-top: 1em; 
     margin-bottom: .4em; 
+    margin-top: 1em; 
   }
 
   #myCanvas {
